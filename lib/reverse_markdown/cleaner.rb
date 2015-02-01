@@ -6,6 +6,7 @@ module ReverseMarkdown
       result = remove_newlines(result)
       result = remove_leading_newlines(result)
       result = clean_tag_borders(result)
+      result = convert_nbsp_to_space(result)
       clean_punctuation_characters(result)
     end
 
@@ -75,6 +76,10 @@ module ReverseMarkdown
       else
         string
       end
+    end
+
+    def convert_nbsp_to_space(string)
+      string.gsub(/&nbsp;/,' ')
     end
 
   end
