@@ -4,8 +4,14 @@ module ReverseMarkdown
       def convert(node)
         content     = treat_children(node)
         indentation = indentation_for(node)
-        prefix      = prefix_for(node)
-        "#{indentation}#{prefix}#{content}\n"
+        prefix      = prefix_for(node) unless has_no_text?(node)
+        text = "#{indentation}#{prefix}#{content}"
+        text << "\n" unless has_no_text?(node)
+        text
+      end
+
+      def has_no_text?(node)
+        node.children[0].text.gsub(/\n/,'').strip == ""
       end
 
       def prefix_for(node)
